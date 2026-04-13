@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro React</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .registro {
+            background: #f9fafb;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .registro strong {
+            display: block;
+            color: #111;
+        }
+
+        .registro p {
+            margin: 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState } = React;
+
+function MiApp() {
+    const [nombre, setNombre] = useState("");
+    const [area, setArea] = useState("Sistemas");
+    const [registros, setRegistros] = useState([]);
+
+    const agregarRegistro = () => {
+        if (nombre.trim() === "") return;
+
+        const nuevo = { nombre, area };
+        setRegistros([...registros, nuevo]);
+        setNombre("");
+    };
+
+    return (
+        <div className="container">
+            
+       
+            <div className="card">
+                <h2>Registro de ingreso</h2>
+                <label style={{display: "block", marginBottom: "5px", fontWeight: "bold"}}>
+                    Nombre Completo
+                </label>
+                <input       
+                    type="text"
+                    placeholder="Nombre completo"
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                />
+                <label style={{display: "block", marginBottom: "5px", fontWeight: "bold"}}>
+                    Área de destino
+                </label>
+                <select 
+                    
+                    value={area}
+                    onChange={(e) => setArea(e.target.value)}
+                >
+                    <option>Sistemas</option>
+                    <option>Mantenimiento</option>
+                    <option>Pista</option>
+                    <option>Despacho de vuelos</option>
+                </select>
+
+                <button onClick={agregarRegistro}>
+                    Agregar registro
+                </button>
+            </div>
+
+          
+            <div className="card">
+                <h2>Personal</h2>
+
+                {registros.map((item, index) => (
+                    <div key={index} className="registro">
+                        <strong>{item.nombre}</strong>
+                        <p>{item.area}</p>
+                    </div>
+                ))}
+            </div>
+
+        </div>
+    );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<MiApp />);
+</script>
+
+</body>
+</html>
